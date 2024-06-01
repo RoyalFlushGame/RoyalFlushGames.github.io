@@ -13,7 +13,7 @@
     <main>
         <section id="description">
             <h2>About the Game</h2>
-            <p>Welcome to My Mobile Game! An exciting adventure awaits you.</p>
+            <p>Testing:: Welcome to My Mobile Game! An exciting adventure awaits you.</p>
             <img src="game-screenshot.png" alt="Game Screenshot">
         </section>
         <section id="download">
