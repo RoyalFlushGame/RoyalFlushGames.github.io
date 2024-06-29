@@ -1,22 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Search and Delete</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
     body {
-      font-family: Arial, sans-serif;
-      background-color: #edf5fc;
-      padding: 20px;
+      font-family: 'Roboto', sans-serif;
+      background-color: #1b1b1b;
+      color: #ffffff;
+      padding: 0;
       margin: 0;
+      scroll-behavior: smooth;
     }
-    .container {
+    .navbar {
+      background-color: #101830;
+      height: 80px;
+    }
+    .navbar-brand img {
+      height: 60px;
+      width: auto; /* Maintain aspect ratio */
+      max-width: 100px; /* Set the max-width to increase the logo size */
+    }
+    .navbar-brand2 img {
+      height: 50px;
+      width: auto; /* Maintain aspect ratio */
+      max-width: 300px; /* Set the max-width to increase the logo size */
+    }
+    .navbar-nav .nav-link {
+      color: #ffffff;
+      font-size: 1.1rem;
+    }
+    .containerInner {
       max-width: 700px;
-      margin: 0 auto;
-      background-color: #fff;
+      margin: 20px auto 20px auto;
+      background-color: #333333;
       padding: 20px;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -41,9 +61,7 @@
       font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 4px;
-    }
-    input#firebaseId {
-      max-width: 700px;
+      color: #000000;
     }
     input[type="submit"], button {
       padding: 10px 20px;
@@ -57,13 +75,6 @@
     input[type="submit"]:hover, button:hover {
       background-color: #357ae8;
     }
-    .user-info {
-      margin-bottom: 20px;
-      background-color: #fff;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
     .notice {
       margin-top: 20px;
       padding: 10px;
@@ -71,9 +82,10 @@
       color: #721c24;
       border: 1px solid #f5c6cb;
       border-radius: 4px;
+      display: none;
     }
-    .delete-btn {
-      background-color: #dc3545;
+    .form-check-label {
+      margin-bottom: 20px;
     }
     .footer {
       margin-top: 20px;
@@ -81,58 +93,92 @@
       color: #888;
       font-size: 12px;
     }
+    .footer a {
+      color: #ffffff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
+  
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">
+        <img src="../images/logo.jpg" alt="Poker Hold'em Logo">
+      </a>
+      <a class="navbar-brand2" href="../index.html">
+        <img src="../images/logo2.jpg" alt="Poker Hold'em Logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="../privacy.html">Privacy</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../terms.html">Terms</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="containerInner">
     <main>
-      <div id="message" class="notice" style="display: none;">Your data deletion request has been received. Your data will be removed in 24 to 48 hours.</div>
+      <div id="message" class="notice">Your data deletion request has been received. Your data will be removed in 24 to 48 hours.</div>
 
       <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="datadelete.png" alt="Data Delete Icon" width="100" height="100">
-        <h2>User data deletion request</h2>
+        <h1>User Data Deletion Request</h1>
         <p class="lead">Please provide required info to get your data deleted from our server</p>
       </div>
 
       <form id="deletionForm" method="POST" onsubmit="return validateForm()">
-        <label for="firebaseId">Firebase ID:</label>
+        <label for="firebaseId">USER ID:</label>
         <input type="text" id="firebaseId" name="firebaseId" required aria-required="true" aria-describedby="firebaseIdHelp">
-        <div id="firebaseIdHelp" class="form-text">Enter your Firebase ID.</div>
+        <div id="firebaseIdHelp" class="form-text text-white">Enter your User ID.</div>
 
         <label for="email">Your email (to receive update when deletion is complete):</label>
         <input type="email" id="email" name="email" required aria-required="true" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        <div id="emailHelp" class="form-text text-white">We'll never share your email with anyone else.</div>
 
         <hr class="my-4">
 
         <label for="fbid">FB ID (optional):</label>
         <input type="text" id="fbid" name="fbid" aria-describedby="fbidHelp">
-        <div id="fbidHelp" class="form-text">Enter your Facebook ID, if applicable.</div>
+        <div id="fbidHelp" class="form-text text-white">Enter your Facebook ID, if applicable.</div>
 
         <label for="phone">Phone Number:</label>
         <input type="tel" id="phone" name="phone" required aria-required="true" aria-describedby="phoneHelp">
-        <div id="phoneHelp" class="form-text">Enter your phone number.</div>
+        <div id="phoneHelp" class="form-text text-white">Enter your phone number.</div>
 
         <label for="appleId">Apple ID:</label>
         <input type="text" id="appleId" name="appleId" aria-describedby="appleIdHelp">
-        <div id="appleIdHelp" class="form-text">Enter your Apple ID, if applicable.</div>
+        <div id="appleIdHelp" class="form-text text-white">Enter your Apple ID, if applicable.</div>
 
         <hr class="my-4">
 
         <div class="form-check">
           <input type="checkbox" class="form-check-input" id="same-address" required aria-required="true">
-          <label class="form-check-label" for="same-address">I understand that after deleting my data, I won't be able to retrieve it.</label>
+          <label class="form-check-label text-white" for="same-address">I understand that after deleting my data, I won't be able to retrieve it.</label>
         </div>
 
         <input type="submit" value="Submit request">
       </form>
     </main>
   </div>
-  <footer class="my-5 pt-5 text-body-secondary text-center text-small">
-    <p class="mb-1">2023 Wawe poker face. All rights reserved.</p>
+
+  <footer class="footer">
+    <p>&copy; 2023 Poker Hold'em. All rights reserved.</p>
     <ul class="list-inline">
-      <li class="list-inline-item"><a href="https://royalflushgame.github.io/RoyalFlushGames.github.io/privacy.html">Privacy</a></li>
-      <li class="list-inline-item"><a href="https://royalflushgame.github.io/RoyalFlushGames.github.io/terms.html">Terms</a></li>
+      <li class="list-inline-item"><a href="../privacy.html">Privacy</a></li>
+      <li class="list-inline-item"><a href="../terms.html">Terms</a></li>
+      <li class="list-inline-item"><a href="../delete_user_data.html">Delete User Data</a></li>
     </ul>
   </footer>
 
