@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Search and Delete</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #edf5fc;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    input[type="text"], input[type="email"], input[type="tel"] {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    input#firebaseId {
+      max-width: 700px;
+    }
+    input[type="submit"], button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4285f4;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover, button:hover {
+      background-color: #357ae8;
+    }
+    .user-info {
+      margin-bottom: 20px;
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .notice {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      border-radius: 4px;
+    }
+    .delete-btn {
+      background-color: #dc3545;
+    }
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      color: #888;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <main>
+      <div id="message" class="notice" style="display: none;">Your data deletion request has been received. Your data will be removed in 24 to 48 hours.</div>
+
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="datadelete.png" alt="Data Delete Icon" width="100" height="100">
+        <h2>User data deletion request</h2>
+        <p class="lead">Please provide required info to get your data deleted from our server</p>
+      </div>
+
+      <form id="deletionForm" method="POST" onsubmit="return validateForm()">
+        <label for="firebaseId">Firebase ID:</label>
+        <input type="text" id="firebaseId" name="firebaseId" required aria-required="true" aria-describedby="firebaseIdHelp">
+        <div id="firebaseIdHelp" class="form-text">Enter your Firebase ID.</div>
+
+        <label for="email">Your email (to receive update when deletion is complete):</label>
+        <input type="email" id="email" name="email" required aria-required="true" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+
+        <hr class="my-4">
+
+        <label for="fbid">FB ID (optional):</label>
+        <input type="text" id="fbid" name="fbid" aria-describedby="fbidHelp">
+        <div id="fbidHelp" class="form-text">Enter your Facebook ID, if applicable.</div>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required aria-required="true" aria-describedby="phoneHelp">
+        <div id="phoneHelp" class="form-text">Enter your phone number.</div>
+
+        <label for="appleId">Apple ID:</label>
+        <input type="text" id="appleId" name="appleId" aria-describedby="appleIdHelp">
+        <div id="appleIdHelp" class="form-text">Enter your Apple ID, if applicable.</div>
+
+        <hr class="my-4">
+
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="same-address" required aria-required="true">
+          <label class="form-check-label" for="same-address">I understand that after deleting my data, I won't be able to retrieve it.</label>
+        </div>
+
+        <input type="submit" value="Submit request">
+      </form>
+    </main>
+  </div>
+  <footer class="my-5 pt-5 text-body-secondary text-center text-small">
+    <p class="mb-1">2023 Wawe poker face. All rights reserved.</p>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="https://royalflushgame.github.io/RoyalFlushGames.github.io/privacy.html">Privacy</a></li>
+      <li class="list-inline-item"><a href="https://royalflushgame.github.io/RoyalFlushGames.github.io/terms.html">Terms</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    function validateForm() {
+      var firebaseId = document.getElementById('firebaseId').value;
+      var email = document.getElementById('email').value;
+      var phone = document.getElementById('phone').value;
+      var checkbox = document.getElementById('same-address').checked;
+
+      if (!firebaseId || !email || !phone || !checkbox) {
+        alert('Please fill in all required fields and agree to the terms.');
+        return false;
+      }
+
+      document.getElementById('message').style.display = 'block';
+      return false; // Prevent form submission for demo
+    }
+  </script>
+</body>
+</html>
